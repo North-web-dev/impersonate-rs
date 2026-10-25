@@ -40,6 +40,9 @@ async fn main() -> Result<(), impersonate_rs::Error> {
 The client is async (tokio + hyper). It negotiates ALPN, speaks HTTP/2 or
 HTTP/1.1 accordingly, decodes `gzip` / `deflate` / `br` / `zstd` response bodies,
 and injects the browser's default headers (only those the caller didn't set).
+Response bodies are capped at 64 MiB by default — both the compressed bytes and
+the decoded output — to prevent decompression-bomb OOMs; change or disable it
+with `Client::with_max_response_bytes`.
 
 ## Measured parity
 
